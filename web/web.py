@@ -20,7 +20,7 @@ def application(environ, start_response):
             htext += '<li><a href="%s/%s">%s</a></li>' % (dir,d,d)
         htext += '</ol>'
         start_response('200 OK', [('Content-Type', 'text/html; charset=utf-8')])
-        body = '<h1 style="text-align: center">肖恩的网站</h1><h3 style="text-align: center">-----宋乔依是最可爱的人🐖</h3><h4>开车了，嘟嘟嘟:</h4>%s<h6 style="text-align: center">您使用的浏览器/系统: %s</h6>' % (htext,environ['HTTP_USER_AGENT'])
+        body = '<h1 style="text-align: center">肖恩·饼 的 网站</h1><h3 style="text-align: center">-----宋乔依是最可爱的人🐖</h3><h3 style="text-align: center">-----来帮忙的盒子也是🐖</h3><h4>开车了，嘟嘟嘟:</h4>%s<h6 style="text-align: center">您使用的浏览器/系统: %s</h6>' % (htext,environ['HTTP_USER_AGENT'])
         return [body.encode('utf-8')]
     else:
         size = os.path.getsize(p)
@@ -38,7 +38,8 @@ def fbuffer(f, chunk_size):
         yield chunk
 
 # 创建一个服务器，IP地址为空，端口是80，处理函数是application:
-httpd = make_server('', 80, application)
-print('Serving HTTP on port 80...')
+port = 8888
+httpd = make_server('', port, application)
+print('Serving HTTP on port %s...' % port)
 # 开始监听HTTP请求:
 httpd.serve_forever()
