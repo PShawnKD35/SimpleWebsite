@@ -20,7 +20,7 @@ def application(environ, start_response):
             htext += '<li><a href="%s/%s">%s</a></li>' % (dir,d,d)
         htext += '</ol>'
         start_response('200 OK', [('Content-Type', 'text/html; charset=utf-8')])
-        body = '<h1>宋乔依是最可爱的人🐖</h1><a href="http://download.189cube.com/update/App/android/yueme.apk">Telecom APK</a><h2>http://192.168.1.18:1080/pac?t=20190428220025318&secret=+CsN4xParBuqHxsAw+p94ICCJGnM0nkD+KetTNfioNQ=</h2>%s<h3>您使用的浏览器/系统: %s</h3>' % (htext,environ['HTTP_USER_AGENT'])
+        body = '<h1 style="text-align: center">肖恩的网站</h1><h3 style="text-align: center">-----宋乔依是最可爱的人🐖</h3><h4>开车了，嘟嘟嘟:</h4>%s<h6 style="text-align: center">您使用的浏览器/系统: %s</h6>' % (htext,environ['HTTP_USER_AGENT'])
         return [body.encode('utf-8')]
     else:
         size = os.path.getsize(p)
