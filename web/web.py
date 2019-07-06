@@ -2,13 +2,14 @@
 from wsgiref.simple_server import make_server
 import os
 import urllib
-DISK = "D:/website/"
+DISK = "/mnt/d/website/"
+# import pdb
 
 # Website
 def application(environ, start_response):
     path = environ['PATH_INFO'].encode('iso-8859-1').decode('utf8')
     #path = urllib.parse.unquote(environ['PATH_INFO'].encode('iso-8859-1').decode('utf8'))
-    dir = path[1:]
+    dir = path[1:] # otherwise the os.path.join won't work
     htext = '<ol>'
     p = os.path.join(DISK,dir)
     if not os.path.exists(p):
@@ -17,10 +18,12 @@ def application(environ, start_response):
     if os.path.isdir(p):
         directories = os.listdir(p)
         for d in directories:
-            htext += '<li><a href="%s/%s">%s</a></li>' % (dir,d,d)
+            # pdb.set_trace()
+            htext += '<li><a href="%s/%s">%s</a></li>' % ('/' + dir if dir else dir,d,d)
         htext += '</ol>'
+        backText = '<h4 style="text-align: center"><a href="../"><b>BACK</b></a></h4>' if dir else ''
         start_response('200 OK', [('Content-Type', 'text/html; charset=utf-8')])
-        body = '<h1 style="text-align: center">肖恩·饼 的 网站</h1><h3 style="text-align: center">-----宋乔依是最可爱的人🐖</h3><h3 style="text-align: center">-----来帮忙的盒子也是🐖</h3><h4>开车了，嘟嘟嘟:</h4>%s<h6 style="text-align: center">您使用的浏览器/系统: %s</h6>' % (htext,environ['HTTP_USER_AGENT'])
+        body = '<h1 style="text-align: center">肖恩·饼 的 网站</h1><h3 style="text-align: center">-----宋乔依是最可爱的人🐖</h3><h3 style="text-align: center">-----来帮忙的盒子也是🐖</h3><h4>开车了，嘟嘟嘟:</h4>%s%s<h6 style="text-align: center">您使用的浏览器/系统: %s</h6>' % (htext,backText,environ['HTTP_USER_AGENT'])
         return [body.encode('utf-8')]
     else:
         size = os.path.getsize(p)
